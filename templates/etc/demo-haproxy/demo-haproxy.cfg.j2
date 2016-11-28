@@ -33,9 +33,6 @@ defaults
   timeout check 5s
   retries 3
   maxconn 2000
-{% block defaults_errorfiles %}
-  errorfile 503 /etc/{{ _haproxy.instance_name }}/errorfiles/503.http
-{% endblock defaults_errorfiles %}
 {% endblock defaults %}
 # -- /defaults
 

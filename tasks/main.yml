@@ -1,6 +1,7 @@
 ---
 # Haproxy Installation Role
-# vim:ft=ansible:ts=2:et: 
+# vim:ft=ansible:ts=2:et:
+
 - debug: msg="haproxy instance {{ _haproxy.instance_name }}"
 
 - name: Configure kernel parameters
