@@ -42,6 +42,9 @@
 - name: Link haproxyctl to /usr/local/sbin
   file: src=/opt/haproxyctl/bin/haproxyctl dest=/usr/local/sbin/haproxyctl state=link
 
+- name: Create haproxy configuration directory
+  file: path="/etc/{{ _haproxy.instance_name }}" state=directory owner=haproxy group=haproxy mode=0755
+
 - block:
   - name: Create SSL certificate directory
     file: path="/etc/{{ _haproxy.instance_name }}/ssl" state=directory owner=haproxy group=haproxy mode=0755
