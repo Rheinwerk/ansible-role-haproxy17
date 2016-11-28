@@ -1,0 +1,8 @@
+---
+
+- name: Start procps
+  service: name=procps state=started
+
+- name: Reload haproxy demo-haproxy
+  service: name="demo-haproxy" state=reloaded
+

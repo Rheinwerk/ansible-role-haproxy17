@@ -1,0 +1,69 @@
+---
+# Haproxy Installation Role
+- debug: msg="haproxy instance {{ _haproxy.instance_name }}"
+
+- name: Configure kernel parameters
+  copy: src="etc/sysctl.d/{{ item }}" dest="/etc/sysctl.d/{{ item }}" mode=0644 owner=root group=root
+  with_items:
+    - 10-network-buffers.conf
+    - 30-haproxy.conf
+  notify:
+    - Start procps
+    - "Reload haproxy {{ _haproxy.instance_name }}"
+
+- name: Add haproxy-ppa-1.6 repository
+  apt_repository: repo="ppa:vbernat/haproxy-1.6" update_cache=yes
+
+- name: Install HAProxy
+  apt: name="{{ item }}" state=present force=yes
+  with_items:
+    - "haproxy={{ _haproxy_version }}"
+    - "hatop"
+    - "socat"
+  notify:
+    - "Reload haproxy {{ _haproxy.instance_name }}"
+
+- name: Create customized init.d script
+  template: src="etc/init.d/haproxy.j2" dest="/etc/init.d/{{ _haproxy.instance_name }}" mode=0755 owner=root group=root
+
+- name: Add group HAProxy as system group
+  group: name=haproxy state=present system=yes
+
+- name: Add user HAProxy as system user
+  user: name=haproxy state=present shell=/bin/false group=haproxy comment="haproxy" system=yes createhome=no
+
+- name: Install Ruby for haproxyctl
+  apt: name=ruby
+
+- name: Clone haproxyctl
+  git: repo=https://github.com/CenterDevice/haproxyctl dest=/opt/haproxyctl version=e8b30077ac0e050728981fc476b3349898b630be force=yes depth=1
+
+- name: Link haproxyctl to /usr/local/sbin
+  file: src=/opt/haproxyctl/bin/haproxyctl dest=/usr/local/sbin/haproxyctl state=link
+
+- block:
+  - name: Create SSL certificate directory
+    file: path="/etc/{{ _haproxy.instance_name }}/ssl" state=directory owner=haproxy group=haproxy mode=0755
+
+  - name: Install SSL certificates and keys
+    copy: content="{{ item.value.data | b64decode }}" dest="/etc/{{ _haproxy.instance_name }}/ssl/{{ item.value.filename }}" mode=0640 owner=haproxy group=haproxy
+    with_dict: "{{ _haproxy.ssl_certs|default({}) }}"
+    notify:
+      - "Reload haproxy {{ _haproxy.instance_name }}"
+
+  - name: Inform external collector about our certificate location
+    lineinfile: dest=/etc/cert_exp_time_globs owner=root group=root mode=0644 create=yes line="/etc/{{ _haproxy.instance_name }}/ssl/*"
+
+  when: _haproxy.ssl_certs is defined
+
+- name: Create HAProxy configuration file
+  template: src="etc/{{ _haproxy.instance_name }}/{{ _haproxy.instance_name}}.cfg.j2" dest="/etc/{{ _haproxy.instance_name }}/{{ _haproxy.instance_name}}.cfg" owner=haproxy group=haproxy mode=0640
+  notify:
+    - "Reload haproxy {{ _haproxy.instance_name }}"
+  when: _haproxy.use_default_config|default(no)
+
+- name: Enable HAProxy for autostart
+  service: name="{{ _haproxy.instance_name }}" enabled=yes
+
+- meta: flush_handlers
+
