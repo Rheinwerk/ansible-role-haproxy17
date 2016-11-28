@@ -3,6 +3,11 @@
 - name: Start procps
   service: name=procps state=started
 
+# ANSIBLE 2 ISSUE: Need to specify the handlers fully, because
+# otherwise whatever variable is used always has the first
+# value it was ever bound to, not the one the role currently
+# uses.
+
 - name: Reload haproxy demo-haproxy
   service: name="demo-haproxy" state=reloaded
 
