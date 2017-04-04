@@ -11,3 +11,6 @@
 - name: Reload haproxy demo-haproxy
   service: name="demo-haproxy" state=reloaded
 
+- name: Restart rsyslog
+  service: name="rsyslog" state=restarted
+

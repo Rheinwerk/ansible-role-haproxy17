@@ -24,6 +24,7 @@
     - "socat"
   notify:
     - "Reload haproxy {{ _haproxy.instance_name }}"
+    - "Restart rsyslog"
 
 - name: Create customized init.d script
   template: src="etc/init.d/haproxy.j2" dest="/etc/init.d/{{ _haproxy.instance_name }}" mode=0755 owner=root group=root
