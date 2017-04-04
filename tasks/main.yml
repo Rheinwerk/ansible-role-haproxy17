@@ -39,7 +39,7 @@
   apt: name=ruby
 
 - name: Clone haproxyctl
-  git: repo=https://github.com/CenterDevice/haproxyctl dest=/opt/haproxyctl version=e8b30077ac0e050728981fc476b3349898b630be force=yes depth=1
+  git: repo=https://github.com/CenterDevice/haproxyctl dest=/opt/haproxyctl version=e8b30077ac0e050728981fc476b3349898b630be force=yes
 
 - name: Link haproxyctl to /usr/local/sbin
   file: src=/opt/haproxyctl/bin/haproxyctl dest=/usr/local/sbin/haproxyctl state=link
