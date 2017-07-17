@@ -13,8 +13,8 @@
     - Start procps
     - "Reload haproxy {{ _haproxy.instance_name }}"
 
-- name: Add haproxy-ppa-1.6 repository
-  apt_repository: repo="ppa:vbernat/haproxy-1.6" update_cache=yes
+- name: Add haproxy-ppa-1.7 repository
+  apt_repository: repo="ppa:vbernat/haproxy-1.7" update_cache=yes
 
 - name: Install HAProxy
   apt: name="{{ item }}" state=present force=yes

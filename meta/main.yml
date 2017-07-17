@@ -2,7 +2,7 @@
 allow_duplicates: yes
 galaxy_info:
   author: Daniel Schneller
-  description: Sets up haproxy 1.6
+  description: Sets up haproxy 1.7
   company: Rheinwerk
   license: license (GPLv3)
   min_ansible_version: 2.2
@@ -12,6 +12,6 @@ galaxy_info:
     - trusty
   galaxy_tags:
     - haproxy
-    - haproxy16
+    - haproxy17
 dependencies: []
 

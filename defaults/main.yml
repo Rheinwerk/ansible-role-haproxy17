@@ -4,7 +4,7 @@
 _haproxy:
   use_default_config: "yes"
   instance_name: "demo-haproxy"
-  version: "1.6.*"
+  version: "1.7.*"
   admin:
     user: "admin"
     password: "this-is-secret"

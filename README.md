@@ -1,9 +1,9 @@
 haproxy installation
 =========
 
-This role can be used to install haproxy 1.6
+This role can be used to install haproxy 1.7
 
-[![Build Status](https://travis-ci.org/Rheinwerk/ansible-role-haproxy.svg?branch=master)](https://travis-ci.org/Rheinwerk/ansible-role-haproxy)
+[![Build Status](https://travis-ci.org/Rheinwerk/ansible-role-haproxy17.svg?branch=master)](https://travis-ci.org/Rheinwerk/ansible-role-haproxy17)
 
 Requirements
 ------------
@@ -34,7 +34,7 @@ Including an example of how to use your role (for instance, with variables passe
         HAPROXY:
           ...
       roles:
-         - { role: haproxy, tags: [ 'haproxy' ], _haproxy: "{{ HAPROXY }}" }
+         - { role: haproxy17, tags: [ 'haproxy' ] _haproxy: "{{ HAPROXY }}" }
 
 License
 -------

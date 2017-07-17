@@ -4,4 +4,4 @@
   become: yes
   become_user: root
   roles:
-    - ansible-role-haproxy16
+    - ansible-role-haproxy17
