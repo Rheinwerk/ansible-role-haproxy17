@@ -31,10 +31,10 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       var:
-        HAPROXY:
+        HAPROXY17:
           ...
       roles:
-         - { role: haproxy17, tags: [ 'haproxy' ] _haproxy: "{{ HAPROXY }}" }
+         - { role: haproxy17, tags: [ 'haproxy' ] _haproxy: "{{ HAPROXY17 }}" }
 
 License
 -------
