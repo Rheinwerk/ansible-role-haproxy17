@@ -38,8 +38,15 @@
 - name: Install Ruby for haproxyctl
   apt: name=ruby
 
-- name: Clone haproxyctl
-  git: repo=https://github.com/CenterDevice/haproxyctl dest=/opt/haproxyctl version=e8b30077ac0e050728981fc476b3349898b630be force=yes
+- set_fact:
+    haproxyctl_version: e8b30077ac0e050728981fc476b3349898b630be
+
+- name: Download and unarchive haproxyctl zip
+  unarchive: remote_src=yes src="https://github.com/CenterDevice/haproxyctl/archive/{{ version }}.zip" dest=/opt
+  register: haproxyctl_dir
+
+- name: Rename created haproxyctl dir
+  command: "mv {{ haproxyctl_dir.dest }}/haproxyctl-{{ version }} {{ haproxyctl_dir.dest }}/haproxyctl"
 
 - name: Link haproxyctl to /usr/local/sbin
   file: src=/opt/haproxyctl/bin/haproxyctl dest=/usr/local/sbin/haproxyctl state=link
