@@ -42,11 +42,11 @@
     haproxyctl_version: e8b30077ac0e050728981fc476b3349898b630be
 
 - name: Download and unarchive haproxyctl zip
-  unarchive: remote_src=yes src="https://github.com/CenterDevice/haproxyctl/archive/{{ version }}.zip" dest=/opt
+  unarchive: remote_src=yes src="https://github.com/CenterDevice/haproxyctl/archive/{{ haproxyctl_version }}.zip" dest=/opt
   register: haproxyctl_dir
 
 - name: Rename created haproxyctl dir
-  command: "mv {{ haproxyctl_dir.dest }}/haproxyctl-{{ version }} {{ haproxyctl_dir.dest }}/haproxyctl"
+  command: "mv {{ haproxyctl_dir.dest }}/haproxyctl-{{ haproxyctl_version }} {{ haproxyctl_dir.dest }}/haproxyctl"
 
 - name: Link haproxyctl to /usr/local/sbin
   file: src=/opt/haproxyctl/bin/haproxyctl dest=/usr/local/sbin/haproxyctl state=link
