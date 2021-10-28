@@ -3,7 +3,7 @@ haproxy installation
 
 This role can be used to install haproxy 1.7
 
-[![Build Status](https://travis-ci.org/Rheinwerk/ansible-role-haproxy17.svg?branch=master)](https://travis-ci.org/Rheinwerk/ansible-role-haproxy17)
+[![Build Status](https://github.com/Rheinwerk/ansible-role-haproxy17/actions/workflows/ci.yml/badge.svg)](https://github.com/Rheinwerk/ansible-role-haproxy17/actions/workflows/ci.yml)
 
 Requirements
 ------------
